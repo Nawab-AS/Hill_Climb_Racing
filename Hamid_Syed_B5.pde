@@ -1,4 +1,4 @@
-PolygonCollider HillCollider;
+PolygonCollider HillCollider; //<>//
 PImage Tire;
 PImage Car;
 PhysicsBody Wheel1;
@@ -556,6 +556,15 @@ class PhysicsBody {
 void keyPressed() {
   println(keyCode);
   switch(keyCode) {
+  case 97:
+    frameRate(60);
+    break;
+  case 98:
+    frameRate(60*10);
+    break;
+  case 99:
+    frameRate(5);
+    break;
   case 39: // right arrow (purposefuly here)
     if (Wheel1.Collider.checkCollision(HillCollider)  ||  Wheel2.checkCollision(HillCollider)  && gameState==0) {
       Wheel1.Velocity.x += 4;
