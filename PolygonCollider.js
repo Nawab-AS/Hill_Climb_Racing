@@ -5,13 +5,13 @@ class PolygonCollider {
     // generate lines
     this.lines = []; // lines[line#][ 0 = slope, 1 = y-intercept ]
 
-    for (let i = 0; i < Points.length; i++) {
-      let p1 = Points[i];
-      let p2 = Points[(i + 1) % Points.length];
+    for (let i = 0; i < points.length; i++) {
+      let p1 = points[i];
+      let p2 = points[(i + 1) % points.length];
 
-      lines.push( [[], []] );
-      lines[i][0] = (p2.y - p1.y) / (p2.x - p1.x); // slope
-      lines[i][1] = p1.y - lines[i][0] * p1.x; // y-intercept
+      this.lines.push( [[], []] );
+      this.lines[i][0] = (p2.y - p1.y) / (p2.x - p1.x); // slope
+      this.lines[i][1] = p1.y - this.lines[i][0] * p1.x; // y-intercept
     }
   }
 
@@ -19,14 +19,15 @@ class PolygonCollider {
     // Checks is collisionPoint is inside of polygonCollider using the point in polyon algorithm
     // Refrence: https://en.wikipedia.org/wiki/Point_in_polygon
 
+    let intersect = createVector();
     let numOfIntersections = 0;
     for (let i = 0; i<this.lines.length; i++) {
-      p1 = Points[i];
-      p2 = Points[(i+1)%this.Points.length];
-      intersect = createVector((this.lines[i][1] - collisionPoint.y)/
-          (0 - this.lines[i][0]), collisionPoint.y);
+      let p1 = this.Points[i];
+      let p2 = this.Points[(i+1)%this.Points.length];
+      intersect.set((this.lines[i][1] - collisionPoint.y)/(0 - this.lines[i][0]), collisionPoint.y);
 
-      if (intersect.x > min(p1.x, p2.x) && intersect.x < max(p1.x, p2.x) && collisionPoint.x < intersect.x) {
+      if (intersect.x > Math.min(p1.x, p2.x) && intersect.x < Math.max(p1.x, p2.x) &&
+          collisionPoint.x < intersect.x) {
         numOfIntersections++;
       }
     }
@@ -49,7 +50,7 @@ class PolygonCollider {
 
   findCollisionVerticies(collisionPolygon) {
     // returns all vertex indexes of all of my vertexes that intersect with PolygonCollider collisionPolygon
-    verticies = [];
+    let verticies = [];
     for (let i=0; i<this.Points.length; i++) {
       if (collisionPolygon.isPointInPolygon(this.Points[i])) {
         verticies.push(i);
@@ -72,7 +73,7 @@ class PolygonCollider {
       let p2 = this.Points[(i+1)%this.Points.length];
 
       this.lines[i][0] = (p2.y - p1.y)/(p2.x - p1.x);
-      this.lines[i][1] = p1.y - lines[i][0]*p1.x;
+      this.lines[i][1] = p1.y - this.lines[i][0]*p1.x;
     }
   }
 
@@ -80,7 +81,7 @@ class PolygonCollider {
     // draws polygon (for debuging only)
     beginShape();
     for (let i = 0; i<this.Points.length; i++) {
-      vertex(this.Points[i].x, Points[i].y);
+      vertex(this.Points[i].x, this.Points[i].y);
     }
     endShape(CLOSE);
   }
