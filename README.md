@@ -6,3 +6,6 @@ First you will need to download processing 4 ([link for download](https://proces
 
 ## Controls
 Use right and left arrow keys to move your car and avoid the lava or your health will go down. try and make it to the end with the highest score
+
+## Aditional notes
+I will admit that the collision detection and physics engine was made solely by me, which is why it is not very accurate and sometimes buggy.
